@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  get 'groups/index'
+  get 'groups/show'
+  get 'groups/edit'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   devise_for :users
   root to: "homes#top"
@@ -17,6 +20,7 @@ Rails.application.routes.draw do
     end
     resource :relationship, only: [:create, :destroy]
   end
+  resources :groups, only: [:new, :index, :show, :create, :edit, :update, :destroy]
 
   devise_scope :user do
     post "users/guest_sign_in", to: "users/sessions#guest_sign_in"

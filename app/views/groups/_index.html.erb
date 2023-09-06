@@ -1,0 +1,22 @@
+<table class='table table-hover table-inverse'>
+  <thead>
+    <tr>
+      <th></th>
+      <th>グループ名</th>
+      <th>紹介</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% groups.each do |group| %>
+      <tr>
+        <td>
+          <%= link_to(group) do %>
+            <%= image_tag group.get_group_image, size:'50x50' %>
+          <% end %>
+        </td>
+        <td><%= link_to group.name, group %></td>
+        <td><%= group.introduction %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
