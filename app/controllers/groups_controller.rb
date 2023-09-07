@@ -10,7 +10,7 @@ class GroupsController < ApplicationController
   def show
     @book = Book.new
     @group = Group.find(params[:id])
-    @user = User.find(params[:id])
+    @user = User.find(current_user.id)
   end
 
   def new
@@ -24,6 +24,7 @@ class GroupsController < ApplicationController
   def create
     @group = Group.new(group_params)
     @group.owner_id = current_user.id
+    @group.users << current_user
     if @group.save
       redirect_to groups_path, method: :post
     else
@@ -43,6 +44,18 @@ class GroupsController < ApplicationController
     @group = Group.find(params[:id])
     @group.destroy
     redirect_to groups_path
+  end
+
+  def join #メンバーイン
+    @group = Group.find(params[:group_id])
+    @group.users << current_user
+    redirect_to group_path(@group)
+  end
+
+  def out_of_group  #メンバーアウト
+    @group = Group.find(params[:group_id])
+    @group.users.delete(current_user)
+    redirect_to group_path(@group)
   end
 
   private

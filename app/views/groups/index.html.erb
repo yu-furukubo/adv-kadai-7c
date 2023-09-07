@@ -8,6 +8,9 @@
     </div>
     <div class='col-md-8 offset-md-1'>
       <h2>Groups</h2>
+      <% unless current_user.guest_user? %>
+        <%= link_to "グループを作成する", new_group_path, class: "btn btn-sm btn-success my-2" %>
+      <% end %>
       <%= render 'index', groups: @groups %>
     </div>
   </div>

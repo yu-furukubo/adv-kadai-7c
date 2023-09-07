@@ -20,7 +20,10 @@ Rails.application.routes.draw do
     end
     resource :relationship, only: [:create, :destroy]
   end
-  resources :groups, only: [:new, :index, :show, :create, :edit, :update, :destroy]
+  resources :groups do
+    get "join" => "groups#join"
+    delete "out_of_group" => "groups#out_of_group"
+  end
 
   devise_scope :user do
     post "users/guest_sign_in", to: "users/sessions#guest_sign_in"

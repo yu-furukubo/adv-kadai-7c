@@ -4,6 +4,8 @@
       <th></th>
       <th>グループ名</th>
       <th>紹介</th>
+      <th>オーナー</th>
+      <th>メンバー数</th>
     </tr>
   </thead>
   <tbody>
@@ -16,6 +18,8 @@
         </td>
         <td><%= link_to group.name, group %></td>
         <td><%= group.introduction %></td>
+        <td><%= group.owner.name %></td>
+        <td><i class="fa-solid fa-users"></i> <%= group.users.count %> 人</td>
       </tr>
     <% end %>
   </tbody>

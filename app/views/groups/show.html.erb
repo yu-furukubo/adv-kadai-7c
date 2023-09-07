@@ -14,24 +14,32 @@
             <th></th>
             <th>グループ名</th>
             <th>紹介</th>
+            <th>メンバー</th>
           </tr>
         </thead>
         <tbody>
     		  <tr>
+            <td><%= image_tag @group.get_group_image, size:"100x100" %></td>
+            <td><%= @group.name %></td>
+            <td><%= @group.introduction %></td>
             <td>
-              <%= link_to(@group) do %>
-                <%= image_tag @group.get_group_image, size:"100x100" %>
+              <% @group.users.each do |member| %>
+                <%= member.name %><br>
               <% end %>
             </td>
-            <td><%= link_to @group.name, @group %></td>
-            <td><%= @group.introduction %></td>
             <% if @group.owner_id == current_user.id %>
               <td><%= link_to 'Edit', edit_group_path(@group), class: "btn btn-sm btn-success" %></td>
               <td><%= link_to 'Destroy', @group, method: :delete, data: { confirm: '本当に消しますか？' }, class: "btn btn-sm btn-danger"%></td>
             <% end %>
+            <% if @group.users.include?(current_user) %>
+              <td><%= link_to 'Leave this group', group_out_of_group_path(@group), method: :delete, class: "btn btn-sm btn-danger" %></td>
+            <% else %>
+              <td><%= link_to 'Join this group', group_join_path(@group), class: "btn btn-sm btn-success" %></td>
+            <% end %>
           </tr>
         </tbody>
       </table>
+      <%= link_to 'グループ一覧に戻る', groups_path %>
     </div>
   </div>
 </div>
