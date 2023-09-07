@@ -58,6 +58,17 @@ class GroupsController < ApplicationController
     redirect_to group_path(@group)
   end
 
+  def new_mail
+    @group = Group.find(params[:group_id])
+  end
+
+  def send_mail
+    @group = Group.find(params[:group_id])
+    @mail_title = params[:mail_title]
+    @mail_content = params[:mail_content]
+    EventMailer.send_mail(@mail_title,@mail_content,@group.users).deliver
+  end
+
   private
   def group_params
     params.require(:group).permit(:name, :introduction, :group_image)
